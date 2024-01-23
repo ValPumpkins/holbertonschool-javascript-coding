@@ -7,15 +7,15 @@ request(apiUrl, (error, response, body) => {
   if (error) {
     console.error(`Error: ${error}`);
   } else {
-    const todoTasks = JSON.parse(body);
+    const todoData = JSON.parse(body);
     const completedTasksByUser = {};
 
-    todoTasks.forEach((todoTasks) => {
-      if (todoTasks.completed) {
-        if (completedTasksByUser[todoTasks.userId]) {
-          completedTasksByUser[todoTasks.userId]++;
+    todoData.forEach((todo) => {
+      if (todo.completed) {
+        if (completedTasksByUser[todo.userId]) {
+          completedTasksByUser[todo.userId]++;
         } else {
-          completedTasksByUser[todoTasks.userId] = 1;
+          completedTasksByUser[todo.userId] = 1;
         }
       }
     });
