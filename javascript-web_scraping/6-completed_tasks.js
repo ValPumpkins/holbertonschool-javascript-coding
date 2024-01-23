@@ -4,21 +4,21 @@ const request = require('request');
 const apiUrl = process.argv[2];
 
 request(apiUrl, (error, response, body) => {
-  if (!error) {
-    const todoData = JSON.parse(body);
+  if (error) {
+    console.error(`Error: ${error}`);
+  } else {
+    const todoTasks = JSON.parse(body);
     const completedTasksByUser = {};
 
-    todoData.forEach((todo) => {
-    if (todo.completed) {
-      if (completedTasksByUser[todo.userId]) {
-        completedTasksByUser[todo.userId]++;
-      } else {
-        completedTasksByUser[todo.userId] = 1;
+    todoTasks.forEach((todoTasks) => {
+      if (todoTasks.completed) {
+        if (completedTasksByUser[todoTasks.userId]) {
+          completedTasksByUser[todoTasks.userId]++;
+        } else {
+          completedTasksByUser[todoTasks.userId] = 1;
+        }
       }
-    }
-    })
+    });
     console.log(completedTasksByUser);
-  } else {
-    console.error(error);
   }
 });
