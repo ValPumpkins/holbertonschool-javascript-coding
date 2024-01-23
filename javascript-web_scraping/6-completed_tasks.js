@@ -7,10 +7,10 @@ request(apiUrl, (error, response, body) => {
   if (error) {
     console.error(`Error: ${error}`);
   } else {
-    const todo = JSON.parse(body);
+    const todoTasks = JSON.parse(body);
     const completedTasksByUser = {};
 
-    todo.forEach(todoTasks => {
+    todoTasks.forEach((todoTasks) => {
       if (todoTasks.completed) {
         if (completedTasksByUser[todoTasks.userId]) {
           completedTasksByUser[todoTasks.userId]++;
