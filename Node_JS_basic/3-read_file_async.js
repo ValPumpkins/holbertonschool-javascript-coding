@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-function countStudents(path) {
+async function countStudents(path) {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf8', (error, data) => {
+    fs.readFile(path, 'utf-8', (error, data) => {
       if (error) {
         reject(new Error('Cannot load the database'));
         return;
@@ -13,18 +13,36 @@ function countStudents(path) {
         .filter(Boolean)
         .slice(1)
         .map((line) => {
-          const [firstName, lastName, age, field] = line.split(',');
-          return { firstName, lastName, age, field };
+          const [firstname, lastname, age, field] = line.split(',');
+          return {
+            firstname,
+            lastname,
+            age,
+            field,
+          };
         });
 
-      const csStudents = students.filter((student) => student.field === 'CS');
-      const sweStudents = students.filter((student) => student.field === 'SWE');
+      const csStudents = students
+        .filter((student) => student.field === 'CS')
+        .map((student) => student.firstname)
+        .join(', ');
+
+      const sweStudents = students
+        .filter((student) => student.field === 'SWE')
+        .map((student) => student.firstname)
+        .join(', ');
 
       console.log(`Number of students: ${students.length}`);
-      console.log(`Number of students in CS: ${csStudents.length}. List: ${csStudents.map((student) => student.firstName).join(', ')}`);
-      console.log(`Number of students in SWE: ${sweStudents.length}. List: ${sweStudents.map((student) => student.firstName).join(', ')}`);
-      resolve();
+      console.log(`Number of students in CS: ${csStudents.length}. List: ${csStudents}`);
+      console.log(`Number of students in SWE: ${sweStudents.length}. List: ${sweStudents}`);
+
+      resolve({
+        total: students.length,
+        cs: csStudents,
+        swe: sweStudents,
+      });
     });
   });
 }
+
 module.exports = countStudents;
