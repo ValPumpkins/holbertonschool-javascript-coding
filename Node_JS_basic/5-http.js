@@ -10,7 +10,7 @@ const app = http.createServer(async (req, res) => {
   }
 
   if (req.url === '/students') {
-    countStudents('database.csv')
+    countStudents(process.argv[2])
       .then((studentsData) => {
         res.write('This is the list of our students\n');
         res.write(`Number of students: ${studentsData.total}\n`);
