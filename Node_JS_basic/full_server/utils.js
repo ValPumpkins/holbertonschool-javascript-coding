@@ -12,7 +12,7 @@ function readDatabase(filePath) {
         .filter(Boolean)
         .slice(1)
         .reduce((accumulator, line) => {
-          const [firstname, lastname, age, field] = line.split(',');
+          const [firstname, , , field] = line.split(',');
           accumulator[field] = [...(accumulator[field] || []), firstname];
           return accumulator;
         }, {});
