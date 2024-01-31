@@ -9,7 +9,7 @@ class StudentsController {
 
         const responseText = 'This is the list of our students\n'
           + `Number of students in CS: ${studentsData.CS.length}. List: ${csStudents}\n`
-          + `Number of students in SWE: ${studentsData.SWE.length}. List: ${sweStudents}\n`;
+          + `Number of students in SWE: ${studentsData.SWE.length}. List: ${sweStudents}`;
 
         response.status(200).send(responseText);
       })
