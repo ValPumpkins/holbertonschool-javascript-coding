@@ -21,7 +21,6 @@ app.get('/students', (req, res) => {
     })
     .catch(() => {
       console.error('Cannot load the database');
-      res.write('Internal Server Error');
       res.end();
     });
 });
