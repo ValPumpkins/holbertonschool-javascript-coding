@@ -1,16 +1,15 @@
 function GiveMeYourName() {
-  console.log('Welcome to Holberton School, what is your name?');
-  process.stdin.setEncoding('utf-8');
-
+  process.stdout.write('Welcome to Holberton School, what is your name?\n');
+  process.stdin.setEncoding('utf8');
   process.stdin.on('data', (input) => {
-    const name = input.trim();
-    console.log(`Your name is: ${name}`);
-    console.log('This important software is now closing');
+    const userInput = input.toString();
+    process.stdout.write(`Your name is: ${userInput}`);
+    process.stdout.write('This important software is now closing\n');
     process.exit();
   });
 }
 
-module.exports = GiveMeYourName;
+module.exports = GiveMeYourNamee;
 
 if (require.main === module) {
   GiveMeYourName();
