@@ -1,37 +1,37 @@
 const http = require('http');
 const countStudents = require('./3-read_file_async');
 
-const app = http.createServer(async (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
+const database = process.argv[2];
 
-  if (req.url === '/') {
-    res.write('Hello Holberton School!');
-    res.end();
+const app = http.createServer((request, response) => {
+  response.writeHead(200, { 'Content-Type': 'text/plain' });
+  if (request.url === '/') {
+    response.write('Hello Holberton School!');
+    response.end();
   }
 
-  if (req.url === '/students') {
-    countStudents(process.argv[2])
-      .then((studentsData) => {
-        res.write('This is the list of our students\n');
-        res.write(`Number of students: ${studentsData.total}\n`);
-        res.write(`Number of students in CS: ${studentsData.cs.length}. List: ${studentsData.cs}\n`);
-        res.write(`Number of students in SWE: ${studentsData.swe.length}. List: ${studentsData.swe}\n`);
+  if (request.url === '/students') {
+    response.write('This is the list of our students\n');
+    countStudents(database)
+      .then((result) => {
+        response.write(`${result.totalNumber}\n`);
+        response.write(`${result.CS}\n`);
+        response.write(`${result.SWE}`);
+        response.end();
       })
       .catch((error) => {
         console.error('Error processing students data:', error);
-        res.write('Error processing students data.');
-      })
-      .finally(() => {
-        res.end();
+        response.write('Cannot load the database');
+        response.end();
       });
   }
 });
 
 const port = 1245;
-const hostname = '127.0.0.1';
-
-app.listen(port, hostname, () => {
-  console.log(`Server is running at http://${hostname}:${port}/`);
-});
-
 module.exports = app;
+
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+  });
+}
