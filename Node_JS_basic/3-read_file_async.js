@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-async function countStudents(path) {
+function countStudents(path) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf-8', (error, data) => {
       if (error) {
@@ -22,25 +22,46 @@ async function countStudents(path) {
           };
         });
 
-      const csStudents = students
-        .filter((student) => student.field === 'CS')
-        .map((student) => student.firstname)
-        .join(', ');
+      const studentsByField = {
+        CS: [],
+        SWE: [],
+      };
 
-      const sweStudents = students
-        .filter((student) => student.field === 'SWE')
-        .map((student) => student.firstname)
-        .join(', ');
-
-      console.log(`Number of students: ${students.length}`);
-      console.log(`Number of students in CS: ${csStudents.length}. List: ${csStudents}`);
-      console.log(`Number of students in SWE: ${sweStudents.length}. List: ${sweStudents}`);
-
-      resolve({
-        total: students.length,
-        cs: csStudents,
-        swe: sweStudents,
+      students.forEach((student) => {
+        if (studentsByField[student.field]) {
+          studentsByField[student.field].push(student.firstname);
+        }
       });
+
+      const totalStudents = students.length;
+
+      console.log(`Number of students: ${totalStudents}`);
+
+      const csStudents = studentsByField.CS;
+      const sweStudents = studentsByField.SWE;
+
+      console.log(
+        `Number of students in CS: ${
+          csStudents.length || 0
+        }. List: ${csStudents.join(', ')}`
+      );
+      console.log(
+        `Number of students in SWE: ${
+          sweStudents.length || 0
+        }. List: ${sweStudents.join(', ')}`
+      );
+
+      const result = {
+        totalNumber: `Number of students: ${totalStudents}`,
+        CS: `Number of students in CS: ${
+          csStudents.length || 0
+        }. List: ${csStudents.join(', ')}`,
+        SWE: `Number of students in SWE: ${
+          sweStudents.length || 0
+        }. List: ${sweStudents.join(', ')}`,
+      };
+
+      resolve(result);
     });
   });
 }
