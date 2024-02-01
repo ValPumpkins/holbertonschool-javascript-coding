@@ -1,4 +1,4 @@
-function GiveMeYourName() {
+function welcomeMessage() {
   process.stdout.write('Welcome to Holberton School, what is your name?\n');
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', (input) => {
@@ -9,8 +9,8 @@ function GiveMeYourName() {
   });
 }
 
-module.exports = GiveMeYourNamee;
+module.exports = welcomeMessage;
 
 if (require.main === module) {
-  GiveMeYourName();
+  welcomeMessage();
 }
