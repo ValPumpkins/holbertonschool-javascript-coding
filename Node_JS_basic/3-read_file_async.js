@@ -40,16 +40,8 @@ function countStudents(path) {
       const csStudents = studentsByField.CS;
       const sweStudents = studentsByField.SWE;
 
-      console.log(
-        `Number of students in CS: ${
-          csStudents.length || 0
-        }. List: ${csStudents.join(', ')}`
-      );
-      console.log(
-        `Number of students in SWE: ${
-          sweStudents.length || 0
-        }. List: ${sweStudents.join(', ')}`
-      );
+      console.log(`Number of students in CS: ${csStudents.length || 0}. List: ${csStudents.join(', ')}`);
+      console.log(`Number of students in SWE: ${sweStudents.length || 0}. List: ${sweStudents.join(', ')}`);
 
       const result = {
         totalNumber: `Number of students: ${totalStudents}`,
