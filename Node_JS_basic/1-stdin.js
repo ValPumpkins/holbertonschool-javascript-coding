@@ -1,16 +1,17 @@
-console.log('Welcome to Holberton School, what is your name?');
+function GiveMeYourName() {
+  console.log('Welcome to Holberton School, what is your name?');
+  process.stdin.setEncoding('utf-8');
 
-const readline = require('readline');
+  process.stdin.on('data', (input) => {
+    const name = input.trim();
+    console.log(`Your name is: ${name}`);
+    console.log('This important software is now closing');
+    process.exit();
+  });
+}
 
-const inputRead = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+module.exports = GiveMeYourName;
 
-inputRead.on('line', (name) => {
-  console.log(`Your name is: ${name}`);
-  console.log('This important software is now closing');
-  inputRead.close();
-});
-
-module.exports = inputRead;
+if (require.main === module) {
+  GiveMeYourName();
+}
