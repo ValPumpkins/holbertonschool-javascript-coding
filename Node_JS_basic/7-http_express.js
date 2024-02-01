@@ -20,7 +20,7 @@ app.get('/students', (req, res) => {
       res.end();
     })
     .catch(() => {
-      console.error('Cannot load the database');
+      res.write('Cannot load the database');
       res.end();
     });
 });
